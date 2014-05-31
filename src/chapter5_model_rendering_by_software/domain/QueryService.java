@@ -14,4 +14,9 @@ public class QueryService {
 		return null;
 	}
 
+	public static Investment findInbestment(String sql) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

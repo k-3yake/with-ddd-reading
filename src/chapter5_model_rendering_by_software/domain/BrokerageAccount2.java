@@ -10,8 +10,9 @@ public class BrokerageAccount2 {
 		String sql = "select * from customer where ss_number = " + socialSecurityNumber;
 		return QueryService.findCustomer(sql);
 	}
-	public List<Investment> getInvestments() {
-		String sql = "select * from investment where account_number = "+ accountNo;
-		return QueryService.findInbestments(sql);
+	public Investment getInvestments(String stockName) {
+		String sql = "select * from investment where account_number = "+ accountNo + 
+				"and stock_symbol=" + stockName;
+		return QueryService.findInbestment(sql);
 	}
 }

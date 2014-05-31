@@ -1,16 +1,18 @@
 package chapter5_model_rendering_by_software.domain;
 
 import java.util.List;
+import java.util.Map;
 
 public class BrokerageAccount {
 	private String accountNo;
 	private Customer customer;
-	private List<Investment> investments;
+	private Map<String, Investment> investmensts;
 	
 	public Customer getCustomer() {
 		return customer;
 	}
-	public List<Investment> getInvestments() {
-		return investments;
+	
+	public Investment getInvestments(String stockName) {
+		return investmensts.get(stockName);
 	}
 }
