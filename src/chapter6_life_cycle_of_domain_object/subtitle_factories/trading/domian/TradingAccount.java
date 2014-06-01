@@ -12,4 +12,10 @@ public class TradingAccount {
 	public String getAccountNo() {
 		return accountNo;
 	}
+	
+	protected TradingOrder newBuy(String security, int count) {
+		TradingOrder tradingOrder = new TradingOrder(accountNo,"buy",security,count);
+		return tradingOrder;
+	}
+
 }
