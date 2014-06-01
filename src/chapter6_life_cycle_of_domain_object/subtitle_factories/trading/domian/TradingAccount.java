@@ -9,8 +9,7 @@ public class TradingAccount {
 		this.customerName = customerName;
 	}
 
-	public String newBuy(TradingOrder tradingOrder) {
-		return tradingOrder.getOrderId();
+	public String getAccountNo() {
+		return accountNo;
 	}
-
 }
