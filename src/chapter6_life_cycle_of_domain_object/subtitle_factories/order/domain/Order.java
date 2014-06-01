@@ -8,11 +8,19 @@ public class Order {
 	private List<OrderItem> orderItems = new ArrayList<>();
 	private Boolean invalid;
 	
-	public void add(OrderItem orderItem){
-		orderItems.add(orderItem);
+	public void add(String itemNo){
+		OrderItem createOrderItem = createOrderItem(itemNo);
+		orderItems.add(createOrderItem);
 		invalid();
 	}
 
+	private OrderItem createOrderItem(String itemNo) {
+		Item item = new Item(itemNo,100); 
+		OrderItem orderItem = new OrderItem(item);
+		return orderItem;
+	}
+
+	
 	public void delete(OrderItem orderItem){
 		//OrderItemのequalsが実装されていない。
 		orderItems.remove(orderItem);
