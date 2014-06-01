@@ -1,6 +1,6 @@
 package chapter6_life_cycle_of_domain_object.subtitle_aggregates.domain;
 
-public class Item {
+public class Item implements Value{
 	private Integer price;
 
 	public Item(Integer price) {
@@ -10,6 +10,10 @@ public class Item {
 
 	public Integer getPrice() {
 		return price;
+	}
+
+	public Item copy() {
+		return null;
 	}
 
 }

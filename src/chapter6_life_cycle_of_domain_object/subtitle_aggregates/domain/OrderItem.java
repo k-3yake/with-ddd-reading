@@ -6,7 +6,7 @@ public class OrderItem {
 	
 	public OrderItem(Item item) {
 		super();
-		this.item = item;
+		this.item = item.copy();
 	}
 	
 	public void add(Integer count){
