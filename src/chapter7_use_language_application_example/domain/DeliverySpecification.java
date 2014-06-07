@@ -5,5 +5,8 @@ import java.util.Date;
 public class DeliverySpecification {
 	private Date arrivalDate;
 	private Location sendCargoLocation;
-
+	public DeliverySpecification(Date arrivalDate, Location sendCargoLocation) {
+		this.arrivalDate = arrivalDate;
+		this.sendCargoLocation = sendCargoLocation;
+	}
 }
