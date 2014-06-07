@@ -7,14 +7,6 @@ class NightlyBatch {
 	private ExternalService externalService;
 	
 	void exec(){
-		Mony totalIncome = new Mony();
-		Mony totalFee = new Mony();
-		for (Assets assets : allAssets) {
-			totalIncome = totalIncome.add(assets.calculateInterestForDate());
-			totalFee = totalFee.add(assets.calculateFeeForDate());
-		}
-		externalService.addTotalIncomeToLedger(totalIncome,"ledger1");
-		externalService.addTotalFeeToLedger(totalFee,"ledger1");
 	}
 
 	private class ExternalService{
