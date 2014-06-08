@@ -1,16 +1,14 @@
 package chapter10_しなやかな設計.calc_share;
 
-import java.util.Map;
 
 public class Loan {
 	private SharePie sharePie;
 	
-	public Map<String,Share> calculatePrincipalPaymentShares(Double paymentAmount){
-		return sharePie.prorate(paymentAmount);
+	public SharePie calculatePrincipalPaymentShares(Double paymentAmount){
+		return sharePie.prorated(paymentAmount);
 	}
 
-	public void applyPrincipalPaymentShare(Map<String,Share> paymentShare){
-		sharePie.decrease(paymentShare);
+	public void applyPrincipalPaymentShare(SharePie paymentSharePie){
+		sharePie = sharePie.minus(paymentSharePie);
 	}
-
 }

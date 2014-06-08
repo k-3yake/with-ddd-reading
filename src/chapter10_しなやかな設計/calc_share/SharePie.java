@@ -1,46 +1,55 @@
 package chapter10_しなやかな設計.calc_share;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 public class SharePie {
-	private Map<String,Share> shares;
+	private Map<String,Share> shares = new HashMap<>();
 	
-	public Map<String, Share> prorate(Double paymentAmount) {
-		Map<String, Share> paymentShares = new HashMap<String, Share>();
-		Map<String, Share> loanShares = shares;
-		Double total = getAmount();
-		for (String owner: loanShares.keySet()) {
-			//初期のローンシェア額
-			Double initialLoanShareAmount = shares.get(owner).getAmount();
-			//支払いシェア額=初期のローンシェア額/ローン総額*支払い額
-			Double paymentShareAmount = initialLoanShareAmount / total * paymentAmount;
-			Share paymentShare = new Share(owner,paymentShareAmount);
-			paymentShares.put(owner, paymentShare);
-		}
-		return paymentShares ;
-	}
-	
-	private Double getAmount() {
-		Map<String, Share> loanShares = shares;
+	private Double getTotalAmount() {
 		Double total = 0d;
-		for (String owner : loanShares.keySet()) {
-			Share loanShare = (Share)loanShares.get(owner);
+		for (String owner : shares.keySet()) {
+			Share loanShare = (Share)shares.get(owner);
 			total = total + loanShare.getAmount();
 		}
 		return total;
 	}
 	
-	public void decrease(Map<String, Share> paymentShare) {
-		Map<String, Share> loanShares = shares;
-		for (String owner: paymentShare.keySet()) {
-			//初期のローンシェア額
-			Double initialLoanShareAmount = shares.get(owner).getAmount();
-			//変更後のローンシェア額=初期ローンシェア額 - 支払いシェア額
-			Double newLoanShareAount = initialLoanShareAmount - paymentShare.get(owner).getAmount();
-			Share newLoanShare = new Share(owner,newLoanShareAount);
-			loanShares.put(owner, newLoanShare);
+	public SharePie minus(SharePie otherSharePie) {
+		SharePie result = new SharePie();
+		Set<String> owners = new HashSet<>();
+		owners.addAll(this.getOwners());
+		owners.addAll(otherSharePie.getOwners());
+		for (String owner: owners) {
+			Double resultShareAmount = 
+					this.getShareAmount(owner) - otherSharePie.getShareAmount(owner);
+			result.add(owner,resultShareAmount);
 		}
+		return result;
 	}
 
+	public void add(String owner, Double amount) {
+		Share share = new Share(owner, amount);
+		this.shares.put(owner,share);
+	}
+
+	private Double getShareAmount(String owner) {
+		return shares.get(owner).getAmount();
+	}
+
+	private Set<String>  getOwners() {
+		return shares.keySet();
+	}
+
+	public SharePie prorated(Double paymentAmount) {
+		SharePie proratedSharPie = new SharePie();
+		Double total = getTotalAmount();
+		for (String owner: shares.keySet()) {
+			Double proratedShareAmount = getShareAmount(owner) / total * paymentAmount;
+			proratedSharPie.add(owner, proratedShareAmount);
+		}
+		return proratedSharPie;
+	}
 }
