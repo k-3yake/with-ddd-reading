@@ -9,6 +9,7 @@ public class CompoundInterest extends AccrualSchedule{
 
 	@Override
 	List<ReturnAccrual> accrualsForDateRange(Date accountingTermStartDate, Date toDate) {
+		
 		return null;
 	}
 
