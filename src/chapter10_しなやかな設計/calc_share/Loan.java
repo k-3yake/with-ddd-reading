@@ -6,7 +6,7 @@ import java.util.Map;
 public class Loan {
 	private Map<String,Share> shares;
 	
-	public Map<String,Share> distributePrincipalPayment(Double paymentAmount){
+	public Map<String,Share> calculatePrincipalPaymentShares(Double paymentAmount){
 		Map<String, Share> paymentShares = new HashMap<String, Share>();
 		Map<String, Share> loanShares = getShares();
 		Double total = getAmount();
@@ -17,15 +17,23 @@ public class Loan {
 			Double paymentShareAmount = initialLoanShareAmount / total * paymentAmount;
 			Share paymentShare = new Share(owner,paymentShareAmount);
 			paymentShares.put(owner, paymentShare);
-			//変更後のローンシェア額=初期ローンシェア額 - 支払いシェア額
-			Double newLoanShareAount = initialLoanShareAmount - paymentShareAmount;
-			Share newLoanShare = new Share(owner,newLoanShareAount);
-			loanShares.put(owner, newLoanShare);
 		}
 		return paymentShares ;
 	}
-
-	private Double getAmount() {
+	
+	public void applyPrincipalPaymentShare(Map<String,Share> paymentShare){
+		Map<String, Share> loanShares = getShares();
+		for (String owner: paymentShare.keySet()) {
+			//初期のローンシェア額
+			Double initialLoanShareAmount = getShareAmount(owner);
+			//変更後のローンシェア額=初期ローンシェア額 - 支払いシェア額
+			Double newLoanShareAount = initialLoanShareAmount - paymentShare.get(owner).getAmount();
+			Share newLoanShare = new Share(owner,newLoanShareAount);
+			loanShares.put(owner, newLoanShare);
+		}
+	}
+	
+	public Double getAmount() {
 		Map<String, Share> loanShares = getShares();
 		Double total = 0d;
 		for (String owner : loanShares.keySet()) {
