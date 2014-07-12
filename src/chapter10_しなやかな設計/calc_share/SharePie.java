@@ -18,13 +18,33 @@ public class SharePie {
 	}
 	
 	public SharePie minus(SharePie otherSharePie) {
+		AmountMargeLogic minus = new AmountMargeLogic() {
+			@Override
+			public Double exec(Double d1, Double d2) {
+				return d1 - d2;
+			}
+		};
+		return mearge(otherSharePie, minus);
+	}
+
+	public SharePie plus(SharePie otherSharePie) {
+		AmountMargeLogic plus = new AmountMargeLogic() {
+			@Override
+			public Double exec(Double d1, Double d2) {
+				return d1 + d2;
+			}
+		};
+		return mearge(otherSharePie, plus);
+	}
+
+	private SharePie mearge(SharePie otherSharePie,AmountMargeLogic logic) {
 		SharePie result = new SharePie();
 		Set<String> owners = new HashSet<>();
 		owners.addAll(this.getOwners());
 		owners.addAll(otherSharePie.getOwners());
 		for (String owner: owners) {
 			Double resultShareAmount = 
-					this.getShareAmount(owner) - otherSharePie.getShareAmount(owner);
+					logic.exec(this.getShareAmount(owner),otherSharePie.getShareAmount(owner));
 			result.add(owner,resultShareAmount);
 		}
 		return result;
@@ -51,5 +71,9 @@ public class SharePie {
 			proratedSharPie.add(owner, proratedShareAmount);
 		}
 		return proratedSharPie;
+	}
+	
+	private interface AmountMargeLogic{
+		Double exec(Double d1,Double d2);
 	}
 }

@@ -11,4 +11,8 @@ public class Loan {
 	public void applyPrincipalPaymentShare(SharePie paymentSharePie){
 		sharePie = sharePie.minus(paymentSharePie);
 	}
+	
+	public void applyDrawDown(SharePie drawnSharPie){
+		sharePie = sharePie.plus(drawnSharPie);
+	}
 }
